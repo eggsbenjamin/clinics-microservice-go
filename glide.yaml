@@ -1,0 +1,3 @@
+package: github.com/eggsbenjamin/clinics-microservice-go
+import:
+- package: github.com/eggsbenjamin/utils

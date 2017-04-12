@@ -1,0 +1,6 @@
+hash: 508a78fa53fe13b1be2a157e75ef00490747c7de81a7ca51fc4871766e6eb243
+updated: 2017-04-12T23:09:22.4593719+01:00
+imports:
+- name: github.com/eggsbenjamin/utils
+  version: cd9cc648840a700ae8f567d37bf1ff3ce8ecd7cc
+testImports: []
