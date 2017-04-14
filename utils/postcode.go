@@ -1,12 +1,14 @@
 package utils
 
 import (
-	"strings"
 	"errors"
 	"fmt"
+	"strings"
 )
 
-func formatPostcode(postcode string) (string, error) {
+type Utils struct{}
+
+func (this *Utils) formatPostcode(postcode string) (string, error) {
 	formatted := strings.Replace(postcode, " ", "", -1)
 	length := len(formatted)
 
@@ -19,8 +21,8 @@ func formatPostcode(postcode string) (string, error) {
 	return strings.ToUpper(formatted), nil
 }
 
-func GetOutwardCode(postcode string) (string, error) {
-	formatted, err := formatPostcode(postcode)
+func (this *Utils) GetOutwardCode(postcode string) (string, error) {
+	formatted, err := this.formatPostcode(postcode)
 
 	if err != nil {
 		return "", err
