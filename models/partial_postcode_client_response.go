@@ -26,6 +26,21 @@ type PartialPostcodeClientResult struct {
 	Address1           string                        `json:"address1",omitempty`
 	Address2           string                        `json:"address2",omitempty`
 	Address3           string                        `json:"address3",omitempty`
-	LatLong            *PartialPostcodeResultLatLong `json:"latong"`
+	LatLong            *PartialPostcodeResultLatLong `json:"latlong"`
 	Formatted          string                        `json:"formatted",omitempty`
+}
+
+type PartialPostcodeClientResultLatLong struct {
+	Type        string                          `json:"type"`
+	Crs         *PartialPostcodeClientResultCrs `json:"crs"`
+	Coordinates []float64                       `json:"coordinates"`
+}
+
+type PartialPostcodeClientResultCrs struct {
+	Type       string                                    `json:"type",omitempty`
+	Properties *PartialPostcodeClientResultCrsProperties `json:"properties",omitempty`
+}
+
+type PartialPostcodeClientResultCrsProperties struct {
+	Name string `json:"name",omitempty`
 }

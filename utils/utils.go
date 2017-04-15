@@ -6,6 +6,10 @@ import (
 	"strings"
 )
 
+type IUtils interface {
+	GetOutwardCode(string) (string, error)
+}
+
 type Utils struct{}
 
 func (this *Utils) formatPostcode(postcode string) (string, error) {
