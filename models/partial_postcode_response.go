@@ -30,15 +30,16 @@ type PartialPostcodeResult struct {
 }
 
 type PartialPostcodeResultLatLong struct {
-	Type string                           `json:"type",omitempty`
-	Crs  *PartialPostcodeResultLatLongCRS `json:"crs"`
+	Type        string                    `json:"type"`
+	Crs         *PartialPostcodeResultCrs `json:"crs"`
+	Coordinates []float64                 `json:"coordinates"`
 }
 
-type PartialPostcodeResultLatLongCRS struct {
-	Type       string                                     `json:"type",omitempty`
-	Properties *PartialPostcodeResultLatLongCRSProperties `json:"properties"`
+type PartialPostcodeResultCrs struct {
+	Type       string                              `json:"type",omitempty`
+	Properties *PartialPostcodeResultCrsProperties `json:"properties",omitempty`
 }
 
-type PartialPostcodeResultLatLongCRSProperties struct {
+type PartialPostcodeResultCrsProperties struct {
 	Name string `json:"name",omitempty`
 }
