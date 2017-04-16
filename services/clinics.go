@@ -3,15 +3,13 @@ package clinics
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 
+	"github.com/eggsbenjamin/clinics-microservice-go/constants"
 	"github.com/eggsbenjamin/clinics-microservice-go/models"
 	"github.com/eggsbenjamin/clinics-microservice-go/utils"
-)
-
-const (
-	serviceUnavailableError = "SERVICE UNAVAILABLE"
 )
 
 type IHTTPClient interface {
@@ -24,22 +22,24 @@ type ClinicsService struct {
 }
 
 func (this *ClinicsService) GetByPostcode(postcode string) (*models.PartialPostcodeClientResponse, error) {
-	_, err := this.Utils.GetOutwardCode(postcode)
+	outwardCode, err := this.Utils.GetOutwardCode(postcode)
 
 	if err != nil {
 		return nil, err
 	}
 
-	res, err := this.Client.Get("")
+	url := fmt.Sprintf("%s%s", constants.CLINICS_POSTCODE, outwardCode)
+
+	res, err := this.Client.Get(url)
 
 	if err != nil {
-		return nil, err
+		return nil, errors.New(constants.CLIENT_ERROR)
 	}
 
 	defer res.Body.Close()
 
 	if res.StatusCode != http.StatusOK {
-		return nil, errors.New(serviceUnavailableError)
+		return nil, errors.New(constants.SERVICE_UNAVAILABLE_ERROR)
 	}
 
 	body, err := ioutil.ReadAll(res.Body)
@@ -50,7 +50,11 @@ func (this *ClinicsService) GetByPostcode(postcode string) (*models.PartialPostc
 
 	result := &models.PartialPostcodeClientResponse{}
 
-	json.Unmarshal(body, result)
+	err = json.Unmarshal(body, result)
+
+	if err != nil {
+		return nil, err
+	}
 
 	return result, nil
 }

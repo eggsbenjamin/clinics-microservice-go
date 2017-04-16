@@ -1,8 +1,11 @@
 hash: cef79c62148e5bc607dbe39d5abb6d4801a3f7d8120453f6e18dee94de6c7da5
-updated: 2017-04-16T17:35:34.646465777+01:00
+updated: 2017-04-16T20:52:19.119541213+01:00
 imports:
+  - utils
 - name: github.com/eggsbenjamin/utils
   version: cd9cc648840a700ae8f567d37bf1ff3ce8ecd7cc
+- name: github.com/gorilla/context
+  version: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
 - name: github.com/gorilla/mux
   version: 599cba5e7b6137d46ddf58fb1765f5d928e69604
 - name: github.com/onsi/ginkgo
