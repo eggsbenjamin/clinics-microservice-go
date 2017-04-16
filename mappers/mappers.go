@@ -36,8 +36,12 @@ func (this *Mapper) formatAddressFields(input *models.PartialPostcodeResult) str
 		result += input.Name
 	}
 
+	if input.Name != "" && formattedAddress != "" {
+		result += " "
+	}
+
 	if formattedAddress != "" {
-		result += fmt.Sprintf(" (%s)", formattedAddress)
+		result += fmt.Sprintf("(%s)", formattedAddress)
 	}
 
 	return result
