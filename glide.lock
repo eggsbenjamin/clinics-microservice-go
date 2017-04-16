@@ -1,6 +1,14 @@
-hash: 508a78fa53fe13b1be2a157e75ef00490747c7de81a7ca51fc4871766e6eb243
-updated: 2017-04-12T23:09:22.4593719+01:00
+hash: cef79c62148e5bc607dbe39d5abb6d4801a3f7d8120453f6e18dee94de6c7da5
+updated: 2017-04-16T17:35:34.646465777+01:00
 imports:
 - name: github.com/eggsbenjamin/utils
   version: cd9cc648840a700ae8f567d37bf1ff3ce8ecd7cc
+- name: github.com/gorilla/mux
+  version: 599cba5e7b6137d46ddf58fb1765f5d928e69604
+- name: github.com/onsi/ginkgo
+  version: f40a49d81e5c12e90400620b6242fb29a8e7c9d9
+  subpackages:
+  - ginkgo
+- name: github.com/onsi/gomega
+  version: 9b8c753e8dfb382618ba8fa19b4197b5dcb0434c
 testImports: []

@@ -1,5 +1,5 @@
 TEST_TARGET=./test/...
 
-test:
- 
-  @go test $$TEST_TARGET -cover -race -timeout=5s
+run_system_tests:
+
+	@ginkgo systemtest
