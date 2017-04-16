@@ -19,18 +19,18 @@ type IHTTPClient interface {
 }
 
 type ClinicsService struct {
-	client IHTTPClient
-	utils  utils.IUtils
+	Client IHTTPClient
+	Utils  utils.IUtils
 }
 
 func (this *ClinicsService) GetByPostcode(postcode string) (*models.PartialPostcodeClientResponse, error) {
-	_, err := this.utils.GetOutwardCode(postcode)
+	_, err := this.Utils.GetOutwardCode(postcode)
 
 	if err != nil {
 		return nil, err
 	}
 
-	res, err := this.client.Get("")
+	res, err := this.Client.Get("")
 
 	if err != nil {
 		return nil, err
