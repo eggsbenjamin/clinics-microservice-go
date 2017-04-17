@@ -1,33 +1,63 @@
-package utils
+package utils_test
 
 import (
+	"fmt"
+
+	. "github.com/eggsbenjamin/clinics-microservice-go/utils"
 	testUtils "github.com/eggsbenjamin/utils"
-	"testing"
+
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
-func TestGetOutwardCode(t *testing.T) {
-	type Fixture struct {
-		Input  string `json:"input"`
-		Output string `json:"output"`
-	}
-
-	utils := &Utils{}
-	testData := []Fixture{}
-
-	testUtils.UnmarshalJsonFile("../fixtures/partial_postcode.json", &testData)
-
-	for _, fixture := range testData {
-		actual, err := utils.GetOutwardCode(fixture.Input)
-		expected := fixture.Output
-
-		if err != nil {
-			t.Logf("unexpected error %v", err)
-			t.Fail()
-		}
-
-		if actual != expected {
-			t.Logf("expected %s, received %s", expected, actual)
-			t.Fail()
-		}
-	}
+type Fixture struct {
+	Input  string `json:"input"`
+	Output string `json:"output"`
 }
+
+var _ = Describe("Utils", func() {
+	It("returns the correct error if the postcode contains less than 5 non-whitespace characters", func() {
+		utils := &Utils{}
+		input := "w"
+		expectedError := fmt.Sprintf("invalid postcode : %s", input)
+		actual, err := utils.GetOutwardCode(input)
+
+		Expect(err.Error()).To(Equal(expectedError))
+		Expect(actual).To(Equal(""))
+	})
+
+	It("returns the correct error if the postcode contains greater than 7 non-whitespace characters", func() {
+		utils := &Utils{}
+		input := "wqqqqqqq"
+		expectedError := fmt.Sprintf("invalid postcode : %s", input)
+		actual, err := utils.GetOutwardCode(input)
+
+		Expect(err.Error()).To(Equal(expectedError))
+		Expect(actual).To(Equal(""))
+	})
+
+	It("returns the correct error if the postcode contains any non-alphanumeric chars", func() {
+		utils := &Utils{}
+		input := "W6 4$D"
+		expectedError := fmt.Sprintf("invalid postcode : %s", input)
+		actual, err := utils.GetOutwardCode(input)
+
+		Expect(err.Error()).To(Equal(expectedError))
+		Expect(actual).To(Equal(""))
+	})
+
+	It("returns the correct outward code on valid postcode argument", func() {
+		utils := &Utils{}
+		testData := []Fixture{}
+
+		testUtils.UnmarshalJsonFile("../fixtures/partial_postcode.json", &testData)
+
+		for _, fixture := range testData {
+			actual, err := utils.GetOutwardCode(fixture.Input)
+			expected := fixture.Output
+
+			Expect(err).To(BeNil())
+			Expect(actual).To(Equal(expected))
+		}
+	})
+})

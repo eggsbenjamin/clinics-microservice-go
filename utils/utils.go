@@ -3,6 +3,7 @@ package utils
 import (
 	"errors"
 	"fmt"
+	"regexp"
 	"strings"
 )
 
@@ -17,6 +18,10 @@ func (this *Utils) formatPostcode(postcode string) (string, error) {
 	length := len(formatted)
 
 	if length < 5 || length > 7 {
+		return "", errors.New(fmt.Sprintf("invalid postcode : %s", postcode))
+	}
+
+	if !regexp.MustCompile(`^[A-Za-z0-9]+$`).MatchString(formatted) {
 		return "", errors.New(fmt.Sprintf("invalid postcode : %s", postcode))
 	}
 
