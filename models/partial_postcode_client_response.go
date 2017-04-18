@@ -1,8 +1,8 @@
 package models
 
 type PartialPostcodeClientResponse struct {
-	Success bool                    `json:"success"`
-	Results []PartialPostcodeResult `json:"result"`
+	Success bool                          `json:"success"`
+	Results []PartialPostcodeClientResult `json:"result"`
 }
 
 type PartialPostcodeClientResult struct {

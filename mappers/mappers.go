@@ -2,6 +2,7 @@ package mappers
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/eggsbenjamin/clinics-microservice-go/models"
 )
@@ -10,11 +11,11 @@ type Mapper struct{}
 
 func (this *Mapper) formatAddressFields(input *models.PartialPostcodeResult) string {
 	var (
-		formattedAddress string
-		result           = ""
+		populatedFields []string
+		result          = ""
 	)
 
-	fieldsToBeFormatted := []string{
+	fields := []string{
 		input.Address1,
 		input.Address2,
 		input.Address3,
@@ -22,29 +23,19 @@ func (this *Mapper) formatAddressFields(input *models.PartialPostcodeResult) str
 		input.City,
 	}
 
-	for i := 0; i < len(fieldsToBeFormatted); i++ {
-		if fieldsToBeFormatted[i] != "" {
-			formattedAddress += fieldsToBeFormatted[i]
-		}
-
-		if i != len(fieldsToBeFormatted)-1 {
-			formattedAddress += ", "
+	for i := 0; i < len(fields); i++ {
+		if fields[i] != "" {
+			populatedFields = append(populatedFields, fields[i])
 		}
 	}
 
-	if input.Name != "" {
-		result += input.Name
+	result += fmt.Sprintf("%s ", input.Name)
+
+	if len(populatedFields) > 0 {
+		result += fmt.Sprintf("(%s)", strings.Join(populatedFields, ", "))
 	}
 
-	if input.Name != "" && formattedAddress != "" {
-		result += " "
-	}
-
-	if formattedAddress != "" {
-		result += fmt.Sprintf("(%s)", formattedAddress)
-	}
-
-	return result
+	return strings.TrimSpace(result)
 }
 
 func (this *Mapper) MapPartialPostcodeResult(input *models.PartialPostcodeResult) *models.PartialPostcodeClientResult {
@@ -86,6 +77,19 @@ func (this *Mapper) MapPartialPostcodeResult(input *models.PartialPostcodeResult
 		Address3:           input.Address3,
 		LatLong:            outputLatLong,
 		Formatted:          this.formatAddressFields(input),
+	}
+
+	return output
+}
+
+func (this *Mapper) MapPartialPostcodeResponse(input *models.PartialPostcodeResponse) *models.PartialPostcodeClientResponse {
+	output := &models.PartialPostcodeClientResponse{
+		Success: input.Success,
+		Results: []models.PartialPostcodeClientResult{},
+	}
+
+	for _, result := range input.Results {
+		output.Results = append(output.Results, *this.MapPartialPostcodeResult(&result))
 	}
 
 	return output

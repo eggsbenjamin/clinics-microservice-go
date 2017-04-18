@@ -1,11 +1,16 @@
 package handlers
 
-type ClinicsByPostcode struct {}
+import (
+	"github.com/eggsbenjamin/clinics-microservice-go/mappers"
+	clinics "github.com/eggsbenjamin/clinics-microservice-go/services"
+	"github.com/eggsbenjamin/clinics-microservice-go/utils"
+)
 
-func(this *ClinicsByPostcode) Handle(c *gin.Context) {
-	//	TODO - implement postcode util to derive partial postcode from full postcode - DONE!!!
+type ClinicsByPostcode struct {
+	clinics clinics.ClinicsService
+	mapper  mappers.Mapper
+}
 
-	//	TODO - implement GetClinicsByPartialPostCode service
+func (this *ClinicsByPostcode) Handle(c *gin.Context) {
 
-	//	TODO - implement mapper to map remote response to desired client response
 }
