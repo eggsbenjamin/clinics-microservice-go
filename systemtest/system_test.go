@@ -14,7 +14,7 @@ import (
 
 var _ = Describe("System", func() {
 	It("responds to GET /clinics/postcode/:postcode with the correct formatted response", func() {
-		url := fmt.Sprintf("http://%s/clinics/postcode/SW114LU", constants.URL)
+		url := fmt.Sprintf("http://%s/clinics/postcode/TW208DE", constants.URL)
 
 		res, err := http.Get(url)
 

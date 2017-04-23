@@ -34,7 +34,7 @@ const (
 		"address3": "",
 		"address2": "",
 		"address1": "Church Road",
-		"formatted": "The Grove Medical Centre (Church Road, TW20 9QJ, Egham, )"
+		"formatted": "The Grove Medical Centre (Church Road, TW20 9QJ, Egham)"
 	}, {
 		"website": "",
 		"sub_type": "UNKNOWN",
@@ -162,7 +162,7 @@ const (
 		"address3": "",
 		"address2": "Englefield Green",
 		"address1": "Bond Street",
-		"formatted": "Englefield Green Health Centre (Bond Street, Englefield Green, Egham, TW20 0PF)"
+		"formatted": "Englefield Green Health Centre (Bond Street, Englefield Green, TW20 0PF, Egham)"
 	}]
 }`
 )

@@ -16,12 +16,23 @@ type IHTTPClient interface {
 	Get(string) (*http.Response, error)
 }
 
+type IClinicsService interface {
+	GetByPostcode(string) (*models.PartialPostcodeResponse, error)
+}
+
 type ClinicsService struct {
 	Client IHTTPClient
 	Utils  utils.IUtils
 }
 
-func (this *ClinicsService) GetByPostcode(postcode string) (*models.PartialPostcodeClientResponse, error) {
+func NewClinicsService(client IHTTPClient, utils utils.IUtils) *ClinicsService {
+	return &ClinicsService{
+		Client: client,
+		Utils:  utils,
+	}
+}
+
+func (this *ClinicsService) GetByPostcode(postcode string) (*models.PartialPostcodeResponse, error) {
 	outwardCode, err := this.Utils.GetOutwardCode(postcode)
 
 	if err != nil {
@@ -48,7 +59,7 @@ func (this *ClinicsService) GetByPostcode(postcode string) (*models.PartialPostc
 		return nil, err
 	}
 
-	result := &models.PartialPostcodeClientResponse{}
+	result := &models.PartialPostcodeResponse{}
 
 	err = json.Unmarshal(body, result)
 

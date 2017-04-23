@@ -7,6 +7,8 @@ import (
 	"net/http"
 
 	"github.com/eggsbenjamin/clinics-microservice-go/constants"
+	"github.com/eggsbenjamin/clinics-microservice-go/models"
+	"github.com/stretchr/testify/mock"
 )
 
 const (
@@ -67,4 +69,39 @@ func (this *MockHTTPClientWithNon200Response) Get(url string) (*http.Response, e
 		StatusCode: http.StatusInternalServerError,
 		Body:       &NoopCloser{bytes.NewBufferString(MOCK_GET_RESPONSE)},
 	}, nil
+}
+
+type MockClinicsService struct {
+	mock.Mock
+}
+
+func (this *MockClinicsService) GetByPostcode(postcode string) (*models.PartialPostcodeResponse, error) {
+	args := this.Called(postcode)
+	if args.Get(0) == nil {
+		return nil, args.Error(1)
+	}
+
+	return args.Get(0).(*models.PartialPostcodeResponse), args.Error(1)
+}
+
+type MockMapper struct {
+	mock.Mock
+}
+
+func (this *MockMapper) MapPartialPostcodeResult(input *models.PartialPostcodeResult) *models.PartialPostcodeClientResult {
+	args := this.Called(input)
+	if args.Get(0) == nil {
+		return nil
+	}
+
+	return args.Get(0).(*models.PartialPostcodeClientResult)
+}
+
+func (this *MockMapper) MapPartialPostcodeResponse(input *models.PartialPostcodeResponse) *models.PartialPostcodeClientResponse {
+	args := this.Called(input)
+	if args.Get(0) == nil {
+		return nil
+	}
+
+	return args.Get(0).(*models.PartialPostcodeClientResponse)
 }

@@ -7,6 +7,11 @@ import (
 	"github.com/eggsbenjamin/clinics-microservice-go/models"
 )
 
+type IMapper interface {
+	MapPartialPostcodeResult(*models.PartialPostcodeResult) *models.PartialPostcodeClientResult
+	MapPartialPostcodeResponse(*models.PartialPostcodeResponse) *models.PartialPostcodeClientResponse
+}
+
 type Mapper struct{}
 
 func (this *Mapper) formatAddressFields(input *models.PartialPostcodeResult) string {

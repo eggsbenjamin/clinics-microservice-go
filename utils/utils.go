@@ -2,9 +2,10 @@ package utils
 
 import (
 	"errors"
-	"fmt"
 	"regexp"
 	"strings"
+
+	"github.com/eggsbenjamin/clinics-microservice-go/constants"
 )
 
 type IUtils interface {
@@ -17,7 +18,7 @@ func (this *Utils) formatPostcode(postcode string) (string, error) {
 	formatted := strings.Replace(postcode, " ", "", -1)
 
 	if !regexp.MustCompile(`^[A-Za-z0-9]{5,7}$`).MatchString(formatted) {
-		return "", errors.New(fmt.Sprintf("invalid postcode : %s", postcode))
+		return "", errors.New(constants.POSTCODE_ERROR)
 	}
 
 	formatted = formatted[0:len(formatted)-3] + " " + formatted[len(formatted)-3:len(formatted)]

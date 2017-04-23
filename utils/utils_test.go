@@ -1,8 +1,7 @@
 package utils_test
 
 import (
-	"fmt"
-
+	"github.com/eggsbenjamin/clinics-microservice-go/constants"
 	. "github.com/eggsbenjamin/clinics-microservice-go/utils"
 	testUtils "github.com/eggsbenjamin/utils"
 
@@ -19,30 +18,27 @@ var _ = Describe("Utils", func() {
 	It("returns the correct error if the postcode contains less than 5 non-whitespace characters", func() {
 		utils := &Utils{}
 		input := "w"
-		expectedError := fmt.Sprintf("invalid postcode : %s", input)
 		actual, err := utils.GetOutwardCode(input)
 
-		Expect(err.Error()).To(Equal(expectedError))
+		Expect(err.Error()).To(Equal(constants.POSTCODE_ERROR))
 		Expect(actual).To(Equal(""))
 	})
 
 	It("returns the correct error if the postcode contains greater than 7 non-whitespace characters", func() {
 		utils := &Utils{}
 		input := "wqqqqqqq"
-		expectedError := fmt.Sprintf("invalid postcode : %s", input)
 		actual, err := utils.GetOutwardCode(input)
 
-		Expect(err.Error()).To(Equal(expectedError))
+		Expect(err.Error()).To(Equal(constants.POSTCODE_ERROR))
 		Expect(actual).To(Equal(""))
 	})
 
 	It("returns the correct error if the postcode contains any non-alphanumeric chars", func() {
 		utils := &Utils{}
 		input := "W6 4$D"
-		expectedError := fmt.Sprintf("invalid postcode : %s", input)
 		actual, err := utils.GetOutwardCode(input)
 
-		Expect(err.Error()).To(Equal(expectedError))
+		Expect(err.Error()).To(Equal(constants.POSTCODE_ERROR))
 		Expect(actual).To(Equal(""))
 	})
 
